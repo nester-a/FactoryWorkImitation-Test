@@ -4,6 +4,9 @@ namespace FactoryWorkImitation.Common.Entities
 {
     public class Stock : IStock
     {
+        public event EventHandler StockLoadPercent95;
+
+
         object _obj = new();
         Queue<IProduct> _products;
         public int Capacity { get; }
@@ -17,6 +20,7 @@ namespace FactoryWorkImitation.Common.Entities
             _products = new();
             Capacity = capacity;
         }
+
         public bool PutOnStock(IProduct product)
         {
             lock (_obj)
@@ -28,6 +32,7 @@ namespace FactoryWorkImitation.Common.Entities
                 }
                 _products.Enqueue(product);
                 Console.WriteLine($"На складе - {FactLoad} товаров. Заполненность - {FactLoadPercent}%");
+                if (FactLoadPercent >= 95) StockLoadPercent95?.Invoke(this, new EventArgs());
                 return true;
             }
         }
