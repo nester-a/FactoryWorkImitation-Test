@@ -15,7 +15,10 @@ foreach (var item in factory_creator.Factories)
 }
 var stock = new Stock(100);
 Console.WriteLine($"Вместимость склада - {100}");
-var manager = new Manager(stock);
+
+var market = new Market();
+ShipCompany logist = new ShipCompany(new Truck(100));
+var manager = new Manager(stock, logist, market);
 
 foreach (var factory in factory_creator.Factories)
 {
@@ -28,5 +31,12 @@ foreach (var factory in factory_creator.Factories)
         } while (!stock.IsFull);
     });
 }
+Task.Factory.StartNew(() =>
+{
+    do
+    {
+        manager.ManageWork();
+    } while (!stock.IsFull);
+});
 Task.WaitAny();
 Console.Read();
