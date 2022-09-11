@@ -11,7 +11,6 @@ namespace FactoryWorkImitation.Common.Creators
         public int FactorysCount { get => Factories.Count; }
         public List<IFactory> Factories { get; }
         public int ManufactureSpeed { get; set; } 
-        public IStock CommonStock { get; set; }
 
         public FactoryCreator(int manufactureSpeed)
         {
@@ -26,7 +25,6 @@ namespace FactoryWorkImitation.Common.Creators
             factory.Name = $"Фабрика-{FactorysCount}";
             factory.ManufactureSpeed = (int)(_speedCoefficient * ManufactureSpeed);
             factory.FactoryProduct = GetFactoryProduct();
-            factory.Stock = CommonStock;
 
             _speedCoefficient += 0.1;
             return factory;

@@ -19,6 +19,7 @@ namespace FactoryWorkImitation.Common.Entities
         }
         public bool PutOnStock(IProduct product)
         {
+            Console.WriteLine($"{product.Name} пробуют разместить на складе...");
             lock (_obj)
             {
                 if (IsFull)
@@ -26,6 +27,7 @@ namespace FactoryWorkImitation.Common.Entities
                     Console.WriteLine("Склад заполнен");
                     return false;
                 }
+                Console.WriteLine($"{product.Name} разместили на складе");
                 _products.Enqueue(product);
                 Console.WriteLine($"На складе - {FactLoad} товаров. Заполненность - {FactLoadPercent}%");
                 return true;

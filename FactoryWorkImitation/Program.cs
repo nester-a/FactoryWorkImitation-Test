@@ -3,7 +3,7 @@ using FactoryWorkImitation.Common.Creators;
 using FactoryWorkImitation.Common.Entities;
 
 Console.WriteLine("Hello, World!");
-var factory_creator = new FactoryCreator(500);
+var factory_creator = new FactoryCreator(5000);
 while(factory_creator.FactorysCount != 3)
 {
     factory_creator.CreateFactory();
@@ -16,16 +16,8 @@ foreach (var item in factory_creator.Factories)
 var stock = new Stock(100);
 Console.WriteLine($"Вместимость склада - {100}");
 
-foreach (var factory in factory_creator.Factories)
-{
-    factory.Stock = stock;
-    Task.Factory.StartNew(() =>
-    {
-        do
-        {
-            factory.CreateProduct();
-        } while (!stock.IsFull);
-    });
-})
-Task.WaitAny();
+var manager = new Manager(factory_creator.Factories, stock);
+
+manager.ManageWork();
+
 Console.Read();
