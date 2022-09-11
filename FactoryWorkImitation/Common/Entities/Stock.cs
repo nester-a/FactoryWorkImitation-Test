@@ -37,7 +37,13 @@ namespace FactoryWorkImitation.Common.Entities
 
         public IProduct RemoveFromStock()
         {
-            throw new NotImplementedException();
+            if (!_products.Any())
+            {
+                Console.WriteLine("Склад пуст");
+                return null!;
+            }
+            var product = _products.Dequeue();
+            return product;
         }
     }
 }

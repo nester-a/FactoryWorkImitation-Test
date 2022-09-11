@@ -4,7 +4,7 @@ namespace FactoryWorkImitation.Common.Entities
 {
     public class SmallTruck : Truck
     {
-        public SmallTruck() : base("Маленький грузовик", 75)
+        public SmallTruck() : base("Маленький грузовик", 75, 120)
         {
             WorkStatus = new WorkStoppedStatus();
         }

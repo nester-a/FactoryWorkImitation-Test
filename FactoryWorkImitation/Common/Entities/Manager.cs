@@ -7,10 +7,12 @@ namespace FactoryWorkImitation.Common.Entities
     public class Manager : IManager
     {
         public List<IFactory> Factories { get; set; }
-
         public IStock Stock {get; set;}
-
         public IWorkStatus WorkStatus { get; private set; } = new WorkStoppedStatus();
+
+        public IShipCompany? ShipCompany { get; set; }
+        public IMarket? Market { get; set; }
+
 
         public Manager(List<IFactory> factories, IStock stock)
         {
@@ -25,6 +27,11 @@ namespace FactoryWorkImitation.Common.Entities
             {
                 if (Factories.All(f => f.WorkStatus is WorkStoppedStatus)) StartAllFactories();
                 if (Factories.Any(f => f.WorkStatus is WorkStoppedStatus)) StartStoppedFactory();
+                if (Stock.FactLoadPercent >= 95)
+                {
+                    var order = new ShipOrder(this, new TruckOrder(Stock, Market));
+                    var res = ShipCompany?.PlaceShipOrder(order);
+                }
             }
         }
 
@@ -32,7 +39,7 @@ namespace FactoryWorkImitation.Common.Entities
         {
             factory.WorkStatus = new OnWorkStatus();
             Console.WriteLine($"{factory.Name} начала работу");
-            new Thread(() =>
+            Task.Factory.StartNew(() =>
             {
                 while (!Stock.IsFull)
                 {
@@ -40,7 +47,7 @@ namespace FactoryWorkImitation.Common.Entities
                 }
                 factory.WorkStatus = new WorkStoppedStatus();
                 Console.WriteLine($"{factory.Name} закончила работу, так как склад полный");
-            }).Start();
+            });
         }
         private void StartAllFactories()
         {
