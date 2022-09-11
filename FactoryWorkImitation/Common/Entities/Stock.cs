@@ -17,6 +17,7 @@ namespace FactoryWorkImitation.Common.Entities
             _products = new();
             Capacity = capacity;
         }
+
         public bool PutOnStock(IProduct product)
         {
             Console.WriteLine($"{product.Name} пробуют разместить на складе...");
