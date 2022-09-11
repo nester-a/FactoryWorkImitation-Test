@@ -1,7 +1,10 @@
-﻿namespace FactoryWorkImitation.Interfaces.Entities
+﻿using FactoryWorkImitation.Interfaces.Entities.Props;
+
+namespace FactoryWorkImitation.Interfaces.Entities
 {
     public interface IFactory
     {
+        IWorkStatus WorkStatus { get; set; }
         string Name { get; set; }
         int ProducedProductCount { get; }
         int ManufactureSpeed { get; set; }

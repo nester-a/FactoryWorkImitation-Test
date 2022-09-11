@@ -1,4 +1,6 @@
-﻿using FactoryWorkImitation.Interfaces.Entities;
+﻿using FactoryWorkImitation.Common.Entities.Props;
+using FactoryWorkImitation.Interfaces.Entities;
+using FactoryWorkImitation.Interfaces.Entities.Props;
 
 namespace FactoryWorkImitation.Common.Entities
 {
@@ -12,7 +14,10 @@ namespace FactoryWorkImitation.Common.Entities
 
         public IProduct FactoryProduct { get; set; }
 
+        public IWorkStatus WorkStatus { get; set; } = new WorkStoppedStatus();
+
         public Factory() { }
+
         public Factory(string name, IProduct factoryProduct, int manufactureSpeed)
         {
             Name = name;
