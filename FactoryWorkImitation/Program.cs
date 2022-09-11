@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using FactoryWorkImitation.Common.Creators;
+﻿using FactoryWorkImitation.Common.Creators;
 using FactoryWorkImitation.Common.Entities;
 
 Console.WriteLine("Hello, World!");
