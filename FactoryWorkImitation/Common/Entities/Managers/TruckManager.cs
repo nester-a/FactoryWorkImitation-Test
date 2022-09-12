@@ -10,10 +10,11 @@ namespace FactoryWorkImitation.Common.Entities.Managers
     {
         Queue<IDeliveryOrder> _orders = new();
         Queue<ITruck> _trucks = new();
-        public IManageStrategy ManageStrategy { get; set; }
+        public IManageStrategy ManageStrategy { get; set; } = null!;
 
         public void Manage()
         {
+            Console.WriteLine("Логист начал работу");
             if (!_trucks.Any()) return;
             var truck = _trucks.Dequeue();
             var order = _orders.Dequeue();
@@ -26,6 +27,12 @@ namespace FactoryWorkImitation.Common.Entities.Managers
         {
             var order = new DeliveryOrder(fromWhere, toWhere);
             _orders.Enqueue(order);
+            Console.WriteLine("Логист принял заказ на перевозку");
+        }
+
+        public void PutInTheGarage(ITruck truck)
+        {
+            _trucks.Enqueue(truck);
         }
     }
 }
