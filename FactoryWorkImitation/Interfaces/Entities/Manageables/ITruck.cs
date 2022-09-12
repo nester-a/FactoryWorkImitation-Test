@@ -6,5 +6,7 @@ namespace FactoryWorkImitation.Interfaces.Entities
     {
         int WeightCapacity { get; }
         int WeightFactLoad { get; }
+
+        void Drive();
     }
 }
