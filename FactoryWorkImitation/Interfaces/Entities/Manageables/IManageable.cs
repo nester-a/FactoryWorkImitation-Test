@@ -1,10 +1,8 @@
 ﻿namespace FactoryWorkImitation.Interfaces.Entities.Manageables
 {
-    public interface IManageable
+    public interface IManageable : IUnloadable, ILoadable
     {
-        bool IsFull { get; }
         bool IsEmpty { get; }
-        bool Load(IProduct product);
-        IProduct Unload();
+        bool IsFull { get; }
     }
 }
