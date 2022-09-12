@@ -1,4 +1,4 @@
-﻿namespace FactoryWorkImitation.Interfaces.Entities
+﻿namespace FactoryWorkImitation.Interfaces.Entities.Manageables
 {
     public interface IManageable
     {

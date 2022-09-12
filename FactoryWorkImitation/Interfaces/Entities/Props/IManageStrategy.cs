@@ -1,4 +1,6 @@
-﻿namespace FactoryWorkImitation.Interfaces.Entities.Props
+﻿using FactoryWorkImitation.Interfaces.Entities.Manageables;
+
+namespace FactoryWorkImitation.Interfaces.Entities.Props
 {
     public interface IManageStrategy
     {

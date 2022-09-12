@@ -1,4 +1,6 @@
-﻿namespace FactoryWorkImitation.Interfaces.Entities
+﻿using FactoryWorkImitation.Interfaces.Entities.Manageables;
+
+namespace FactoryWorkImitation.Interfaces.Entities
 {
     public interface IStock : IManageable
     {
