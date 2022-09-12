@@ -2,8 +2,9 @@
 
 namespace FactoryWorkImitation.Interfaces.Entities.Props
 {
-    public interface IManageStrategy
+    public interface IDeliveryOrder
     {
-        void Do(IManageable unloadingObject, IManageable loadingObject);
+        IManageable FromWhere { get; }
+        IManageable ToWhere { get; }
     }
 }

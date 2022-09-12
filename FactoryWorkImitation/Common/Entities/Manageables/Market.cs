@@ -1,5 +1,5 @@
 ﻿using FactoryWorkImitation.Interfaces.Entities;
-using FactoryWorkImitation.Interfaces.Entities.Manageables;
+using FactoryWorkImitation.Interfaces.Entities.Manageables.Base;
 
 namespace FactoryWorkImitation.Common.Entities.Manageables
 {

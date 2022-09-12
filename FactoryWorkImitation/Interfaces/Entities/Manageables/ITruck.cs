@@ -1,4 +1,4 @@
-﻿using FactoryWorkImitation.Interfaces.Entities.Manageables;
+﻿using FactoryWorkImitation.Interfaces.Entities.Manageables.Base;
 
 namespace FactoryWorkImitation.Interfaces.Entities
 {

@@ -1,4 +1,4 @@
-﻿namespace FactoryWorkImitation.Interfaces.Entities.Manageables
+﻿namespace FactoryWorkImitation.Interfaces.Entities.Manageables.Base
 {
     public interface ILoadable
     {
