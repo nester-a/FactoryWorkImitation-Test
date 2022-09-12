@@ -2,6 +2,7 @@
 {
     public interface ITruck : IManageable
     {
-
+        int WeightCapacity { get; }
+        int WeightFactLoad { get; }
     }
 }
