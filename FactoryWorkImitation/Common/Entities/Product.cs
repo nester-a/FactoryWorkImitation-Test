@@ -11,6 +11,7 @@ namespace FactoryWorkImitation.Common.Entities
 
         public PackingType PackingType { get; }
 
+        public Product() { }
         public Product(string name, int weight, PackingType packingType)
         {
             Name = name;

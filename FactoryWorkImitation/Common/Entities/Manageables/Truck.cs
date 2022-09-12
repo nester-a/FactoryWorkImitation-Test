@@ -32,5 +32,10 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             WeightFactLoad -= product.Weight;
             return product;
         }
+
+        public void Drive()
+        {
+            Thread.Sleep(100);
+        }
     }
 }

@@ -10,11 +10,10 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
 
         public bool Load(IProduct product)
         {
-            //на фабрике не храним товар, поэтому просто его уничтожаем
+            //на фабрике не храним товар, поэтому просто его обнуляем
             product = null!;
             return true;
         }
-
         public IProduct Unload()
         {
             Console.WriteLine("Делаем новый товар...");
