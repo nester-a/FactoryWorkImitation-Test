@@ -1,9 +1,11 @@
-﻿using FactoryWorkImitation.Interfaces.Entities;
+﻿using FactoryWorkImitation.Interfaces.Entities.Manageables;
 
 namespace FactoryWorkImitation.Interfaces.Creators
 {
     public interface IFactoryCreator
     {
-        int FactorysCount { get; }
+        int ManufactureSpeed { get; }
+
+        IProductFactory CreateFactory();
     }
 }

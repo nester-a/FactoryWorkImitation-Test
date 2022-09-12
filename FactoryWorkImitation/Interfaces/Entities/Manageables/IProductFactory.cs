@@ -2,5 +2,9 @@
 
 namespace FactoryWorkImitation.Interfaces.Entities.Manageables
 {
-    public interface IProductFactory : IManageable { }
+    public interface IProductFactory : IManageable
+    {
+        int ManufactureSpeed { get; }
+        IProduct FactoryProduct { get; }
+    }
 }

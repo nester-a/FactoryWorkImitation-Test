@@ -17,7 +17,9 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             {
                 if (product is null) return false;
                 _products.Add(product);
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Товар {product.Name} попал на рынок");
+                Console.ResetColor();
                 return true;
             }
         }

@@ -28,7 +28,9 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             {
                 if (product is null || IsFull) return false;
                 _products.Push(product);
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine($"В {Name} загрузили товар {product.Name}");
+                Console.ResetColor();
                 WeightFactLoad += product.Weight;
                 return true;
             }
@@ -41,7 +43,9 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
                 var product = _products.Pop();
                 if (product is null) return null!;
 
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine($"Из {Name} выгрузили товар {product.Name}");
+                Console.ResetColor();
                 WeightFactLoad -= product.Weight;
                 return product;
             }
@@ -49,17 +53,25 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
 
         public void Drive(IManageable place)
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{Name} поехал в {place.Name}");
-            //Thread.Sleep(100);
+            Console.ResetColor();
+            Thread.Sleep(100);
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{Name} приехал в {place.Name}");
+            Console.ResetColor();
         }
 
         public void DriveHome()
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{Name} поехал в гараж");
-            //Thread.Sleep(100);
+            Console.ResetColor();
+            Thread.Sleep(100);
             Owner?.PutInTheGarage(this);
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{Name} приехал в гараж");
+            Console.ResetColor();
         }
     }
 }

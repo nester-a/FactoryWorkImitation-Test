@@ -25,9 +25,20 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
         {
             lock (_lockObj)
             {
-                if (product is null || IsFull) return false;
+                if (product is null || IsFull)
+                {
+                    if (IsFull)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Склад заполнен!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        Console.ResetColor();
+                    }
+                    return false;
+                }
                 _products.Enqueue(product);
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"На склад попал товар {product.Name}");
+                Console.ResetColor();
                 if (FactLoadPercent >= 95) StockIsAlmostFull?.Invoke(this, EventArgs.Empty);
                 return true;
             }
@@ -40,7 +51,9 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
                 if (IsEmpty) return null!;
                 var product = _products.Dequeue();
                 if (product is null) return null!;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Со склада забрали товар {product.Name}");
+                Console.ResetColor();
                 return product;
             }
         }
