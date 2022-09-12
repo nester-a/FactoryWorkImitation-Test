@@ -2,6 +2,6 @@
 {
     public interface IManageStrategy
     {
-        void Do();
+        void Do(IManageable unloadingObject, IManageable loadingObject);
     }
 }
