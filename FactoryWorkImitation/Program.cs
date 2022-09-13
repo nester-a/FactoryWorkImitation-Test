@@ -1,8 +1,11 @@
 ﻿using FactoryWorkImitation.Common.Creators;
 using FactoryWorkImitation.Common.Entities.Props.Strategies;
+using FactoryWorkImitation.Interfaces;
 using FactoryWorkImitation.Interfaces.Entities;
 using FactoryWorkImitation.Interfaces.Entities.Manageables;
 
+//держатели статистики
+List<IStatisticsHandler> statList = new();
 
 //определяем стратегии (синхронные или конкурентные) 
 var managerStrat = new ConcurrencyManageStrategy();
@@ -11,7 +14,7 @@ var logistStrat = new ConcurrencyTruckStrategy();
 //создаем фабрики
 var factoryCreator = new FactoryCreator();
 
-factoryCreator.ManufactureSpeed = 500;
+factoryCreator.ManufactureSpeed = 50000;
 List<IProductFactory> factories = new List<IProductFactory>();
 for (int i = 0; i < 2; i++)
 {
@@ -21,12 +24,12 @@ for (int i = 0; i < 2; i++)
 //создаем грузовики
 var truckCreator = new TruckCreator();
 
-truckCreator.SetSpeed = 1200;
-truckCreator.SetWeightCapacity = 100;
+truckCreator.SetSpeed = 12000;
+truckCreator.SetWeightCapacity = 1000;
 var truck1 = truckCreator.CreateTruck();
 
-truckCreator.SetSpeed = 1000;
-truckCreator.SetWeightCapacity = 150;
+truckCreator.SetSpeed = 10000;
+truckCreator.SetWeightCapacity = 1500;
 var truck2 = truckCreator.CreateTruck();
 
 List<ITruck> trucks = new List<ITruck>();
@@ -36,6 +39,7 @@ trucks.Add(truck2);
 //создаем рынок
 var marketCreator = new MarketCreator();
 var market = marketCreator.CreateMarket();
+statList.Add(market as IStatisticsHandler);
 
 //создаём склад
 var stockCreator = new StockCreator();
@@ -79,3 +83,9 @@ Task.WaitAny();
 
 
 Console.ReadKey();
+
+//вывод статистики
+foreach (var item in statList)
+{
+    item.GetStatistic();
+}
