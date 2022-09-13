@@ -38,7 +38,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
                 }
                 _products.Enqueue(product);
                 _loadList.Add(product);
-                SendMessage($"На {Name} попал товар {product.Name}");
+                SendMessage($"На {Name} попал товар {product.Name}. Общее кол-во товаров - {FactLoad} штук, процент загрузки - {FactLoadPercent}%");
                 if (FactLoadPercent >= 95) StockIsAlmostFull?.Invoke(this, EventArgs.Empty);
                 return true;
             }
@@ -52,7 +52,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
                 var product = _products.Dequeue();
                 if (product is null) return null!;
                 _unloadList.Add(product);
-                SendMessage($"Со {Name} забрали товар {product.Name}");
+                SendMessage($"Со {Name} забрали товар {product.Name}. Товаров осталось - {FactLoad} штук, процент загрузки - {FactLoadPercent}%");
                 return product;
             }
         }

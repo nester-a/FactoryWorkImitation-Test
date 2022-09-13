@@ -14,7 +14,7 @@ var logistStrat = new ConcurrencyTruckStrategy();
 //создаем фабрики
 var factoryCreator = new FactoryCreator();
 
-factoryCreator.ManufactureSpeed = 5;
+factoryCreator.ManufactureSpeed = 500;
 List<IProductFactory> factories = new List<IProductFactory>();
 for (int i = 0; i < 2; i++)
 {
@@ -28,12 +28,12 @@ foreach (var factory in factories)
 //создаем грузовики
 var truckCreator = new TruckCreator();
 
-truckCreator.SetSpeed = 12000;
-truckCreator.SetWeightCapacity = 1000;
+truckCreator.SetSpeed = 1200;
+truckCreator.SetWeightCapacity = 100;
 var truck1 = truckCreator.CreateTruck();
 
-truckCreator.SetSpeed = 10000;
-truckCreator.SetWeightCapacity = 1500;
+truckCreator.SetSpeed = 1000;
+truckCreator.SetWeightCapacity = 150;
 var truck2 = truckCreator.CreateTruck();
 
 List<ITruck> trucks = new List<ITruck>();
@@ -47,7 +47,7 @@ statList.Add(market);
 
 //создаём склад
 var stockCreator = new StockCreator();
-stockCreator.SetCapacity = 200;
+stockCreator.SetCapacity = 20;
 var stock = stockCreator.CreateStock();
 statList.Add(stock);
 
@@ -72,6 +72,7 @@ logist.ManageStrategy = logistStrat;
 foreach (var truck in trucks)
 {
     logist.PutInTheGarage(truck);
+    statList.Add(truck);
 }
 
 

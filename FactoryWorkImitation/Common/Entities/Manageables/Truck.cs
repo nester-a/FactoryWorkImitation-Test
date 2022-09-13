@@ -6,6 +6,9 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
 {
     public class Truck : ITruck
     {
+        List<IProduct> _loadList = new();
+        List<IProduct> _unloadList = new();
+
         Stack<IProduct> _products = new();
         object _lockObj = new();
 
@@ -42,6 +45,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             {
                 if (product is null || IsFull) return false;
                 _products.Push(product);
+                _loadList.Add(product);
                 SendMessage($"В {Name} загрузили товар {product.Name}");
                 WeightFactLoad += product.Weight;
                 return true;
@@ -57,6 +61,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
 
                 SendMessage($"Из {Name} выгрузили товар {product.Name}");
                 WeightFactLoad -= product.Weight;
+                _unloadList.Add(product);
                 return product;
             }
         }
@@ -81,6 +86,34 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(message);
             Console.ResetColor();
+        }
+
+        public void GetStatistic()
+        {
+            var statisticList = new List<string>();
+            statisticList.Add($"Статистика сущности {Name}");
+
+            StatisticsHelper(statisticList, _loadList, "Загрузка товаров");
+            StatisticsHelper(statisticList, _unloadList, "Выгрузка товаров");
+            foreach (var str in statisticList)
+            {
+                SendMessage(str);
+            }
+        }
+        private void StatisticsHelper(List<string> statisticList, List<IProduct> productsList, string title)
+        {
+            statisticList.Add(title);
+            if (!productsList.Any()) statisticList.Add(@"/*** пусто ***/");
+            else
+            {
+                var loadGroups = productsList.GroupBy(p => p.Name);
+                foreach (var product in loadGroups)
+                {
+                    var tmp = product.Count();
+                    statisticList.Add($"{product.Key} в количестве {tmp} штук");
+                }
+            }
+
         }
     }
 }
