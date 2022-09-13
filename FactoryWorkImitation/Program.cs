@@ -4,6 +4,11 @@ using FactoryWorkImitation.Interfaces;
 using FactoryWorkImitation.Interfaces.Entities;
 using FactoryWorkImitation.Interfaces.Entities.Manageables;
 
+
+Console.WriteLine("Для начала работы программы нажмите любую клавишу.");
+Console.WriteLine("Для вывода статистики и завершения работы также нажмите любую клавишу");
+Console.ReadKey();
+
 //держатели статистики
 List<IStatisticsHandler> statList = new();
 
@@ -12,11 +17,13 @@ var managerStrat = new ConcurrencyManageStrategy();
 var logistStrat = new ConcurrencyTruckStrategy();
 
 //создаем фабрики
-var factoryCreator = new FactoryCreator();
+int factoriesCount = 3;
+int n = 50;
 
-factoryCreator.ManufactureSpeed = 500;
+var factoryCreator = new FactoryCreator();
+factoryCreator.ManufactureSpeed = n;
 List<IProductFactory> factories = new List<IProductFactory>();
-for (int i = 0; i < 2; i++)
+for (int i = 0; i < factoriesCount; i++)
 {
     factories.Add(factoryCreator.CreateFactory());
 }
@@ -28,11 +35,11 @@ foreach (var factory in factories)
 //создаем грузовики
 var truckCreator = new TruckCreator();
 
-truckCreator.SetSpeed = 1200;
+truckCreator.SetSpeed = 120;
 truckCreator.SetWeightCapacity = 100;
 var truck1 = truckCreator.CreateTruck();
 
-truckCreator.SetSpeed = 1000;
+truckCreator.SetSpeed = 100;
 truckCreator.SetWeightCapacity = 150;
 var truck2 = truckCreator.CreateTruck();
 
@@ -47,7 +54,13 @@ statList.Add(market);
 
 //создаём склад
 var stockCreator = new StockCreator();
-stockCreator.SetCapacity = 20;
+int M = 100;
+int factoriesSpeedSum = 0;
+foreach (var factory in factories)
+{
+    factoriesSpeedSum += factory.ManufactureSpeed;
+}
+stockCreator.SetCapacity = M * factoriesSpeedSum;
 var stock = stockCreator.CreateStock();
 statList.Add(stock);
 
