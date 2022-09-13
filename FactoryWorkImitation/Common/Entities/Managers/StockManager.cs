@@ -12,6 +12,7 @@ namespace FactoryWorkImitation.Common.Entities.Managers
         public IStock Stock { get; set; }
         public ITruckManager? LogisticSpecialist { get; set; }
 
+
         public IManageStrategy ManageStrategy { get; set; } = null!;
 
         public void Manage()

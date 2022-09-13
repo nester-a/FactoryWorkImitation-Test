@@ -8,6 +8,7 @@ namespace FactoryWorkImitation.Interfaces.Entities
         ITruckManager Owner { get; set; }
         int WeightCapacity { get; }
         int WeightFactLoad { get; }
+        int EmptyDriveSpeed { get; }
 
         void Drive(IManageable place);
         void DriveHome();

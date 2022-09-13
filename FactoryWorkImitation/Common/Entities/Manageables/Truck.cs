@@ -16,10 +16,23 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
         public bool IsFull => WeightFactLoad == WeightCapacity;
         public ITruckManager? Owner { get; set; }
 
-        public Truck(string name, int weightCapacity)
+        int LoadPercent => WeightFactLoad * 100 / WeightCapacity;
+        public int EmptyDriveSpeed { get; }
+        int FullDriveSpeed => (int)(EmptyDriveSpeed * 0.6);
+        int CurrentSpeed
+        {
+            get
+            {
+                if (LoadPercent == 0) return EmptyDriveSpeed;
+                return EmptyDriveSpeed - ((EmptyDriveSpeed - FullDriveSpeed) * 100 / LoadPercent);
+            }
+        }
+
+        public Truck(string name, int weightCapacity, int emptyDriveSpeed)
         {
             Name = name;
             WeightCapacity = weightCapacity;
+            EmptyDriveSpeed = emptyDriveSpeed;
         }
 
         public bool Load(IProduct product)
@@ -54,9 +67,9 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
         public void Drive(IManageable place)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{Name} поехал в {place.Name}");
+            Console.WriteLine($"{Name} поехал в {place.Name} со скоростью {CurrentSpeed} км/ч");
             Console.ResetColor();
-            Thread.Sleep(100);
+            Thread.Sleep(3600000 / CurrentSpeed);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{Name} приехал в {place.Name}");
             Console.ResetColor();
@@ -65,9 +78,9 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
         public void DriveHome()
         {
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{Name} поехал в гараж");
+            Console.WriteLine($"{Name} поехал в гараж со скоростью {CurrentSpeed} км/ч");
             Console.ResetColor();
-            Thread.Sleep(100);
+            Thread.Sleep(3600000 / CurrentSpeed);
             Owner?.PutInTheGarage(this);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{Name} приехал в гараж");

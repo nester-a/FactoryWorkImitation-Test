@@ -32,6 +32,7 @@ namespace FactoryWorkImitation.Common.Entities.Managers
 
         public void PutInTheGarage(ITruck truck)
         {
+            if (truck.Owner != this) truck.Owner = this;
             _trucks.Enqueue(truck);
         }
     }

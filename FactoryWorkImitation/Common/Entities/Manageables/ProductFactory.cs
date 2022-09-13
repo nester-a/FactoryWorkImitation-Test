@@ -33,7 +33,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             lock (_lockObj)
             {
                 Console.WriteLine($"{Name} делает новый {FactoryProduct.Name}...");
-                Thread.Sleep(10000/ ManufactureSpeed);
+                Thread.Sleep(3600000 / ManufactureSpeed);
                 Console.WriteLine($"{Name} сделала новый товар {FactoryProduct.Name}");
                 return new Product(FactoryProduct.Name, FactoryProduct.Weight, FactoryProduct.PackingType);
             }

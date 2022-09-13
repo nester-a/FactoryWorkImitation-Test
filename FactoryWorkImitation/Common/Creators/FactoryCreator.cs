@@ -12,7 +12,7 @@ namespace FactoryWorkImitation.Common.Creators
         double SpeedCoef = 1.0;
         int FactoriesCount { get; set; }
 
-        public int ManufactureSpeed => 10;
+        public int ManufactureSpeed { get; set; } = 50;
 
         public IProductFactory CreateFactory()
         {
