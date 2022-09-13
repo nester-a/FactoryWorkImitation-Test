@@ -2,10 +2,8 @@
 
 namespace FactoryWorkImitation.Interfaces.Creators
 {
-    public interface IFactoryCreator
+    public interface IMarketCreator
     {
-        int ManufactureSpeed { get; set; }
-
-        IProductFactory CreateFactory();
+        IMarket CreateMarket();
     }
 }

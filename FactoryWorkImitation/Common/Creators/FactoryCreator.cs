@@ -1,34 +1,25 @@
 ﻿using FactoryWorkImitation.Common.Entities;
+using FactoryWorkImitation.Common.Entities.Manageables;
 using FactoryWorkImitation.Interfaces.Creators;
 using FactoryWorkImitation.Interfaces.Entities;
+using FactoryWorkImitation.Interfaces.Entities.Manageables;
 using FactoryWorkImitation.Interfaces.Entities.Props;
 
 namespace FactoryWorkImitation.Common.Creators
 {
     public class FactoryCreator : IFactoryCreator
     {
-        static double _speedCoefficient = 1.0;
-        public int FactorysCount { get => Factories.Count; }
-        public List<IFactory> Factories { get; }
-        public int ManufactureSpeed { get; set; } 
-        public IStock CommonStock { get; set; }
+        double SpeedCoef = 1.0;
+        int FactoriesCount { get; set; }
 
-        public FactoryCreator(int manufactureSpeed)
-        {
-            Factories = new();
-            if (manufactureSpeed < 1) ManufactureSpeed = 1;
-            else ManufactureSpeed = manufactureSpeed;
-        }
-        public IFactory CreateFactory()
-        {
-            var factory = new Factory();
-            Factories.Add(factory);
-            factory.Name = $"Фабрика-{FactorysCount}";
-            factory.ManufactureSpeed = (int)(_speedCoefficient * ManufactureSpeed);
-            factory.FactoryProduct = GetFactoryProduct();
-            factory.Stock = CommonStock;
+        public int ManufactureSpeed { get; set; } = 50;
 
-            _speedCoefficient += 0.1;
+        public IProductFactory CreateFactory()
+        {
+            FactoriesCount++;
+            var product = GetFactoryProduct();
+            var factory = new ProductFactory($"Фабрика-{FactoriesCount}", (int)(ManufactureSpeed * SpeedCoef), product);
+            SpeedCoef += 0.1;
             return factory;
         }
 
@@ -38,7 +29,7 @@ namespace FactoryWorkImitation.Common.Creators
             var weight = random.Next(5, 10);
             var packing = random.Next(0, 3);
 
-            return new Product($"Товар фабрики-{FactorysCount}", weight, (PackingType)packing);
+            return new Product($"Товар-{FactoriesCount}", weight, (PackingType)packing);
         }
     }
 }
