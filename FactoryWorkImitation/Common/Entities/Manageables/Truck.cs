@@ -33,6 +33,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             Name = name;
             WeightCapacity = weightCapacity;
             EmptyDriveSpeed = emptyDriveSpeed;
+            SendMessage($"{Name} создан. Вместимость - {WeightCapacity} кг. Скорость порожнем - {EmptyDriveSpeed} км/ч");
         }
 
         public bool Load(IProduct product)
@@ -41,9 +42,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             {
                 if (product is null || IsFull) return false;
                 _products.Push(product);
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"В {Name} загрузили товар {product.Name}");
-                Console.ResetColor();
+                SendMessage($"В {Name} загрузили товар {product.Name}");
                 WeightFactLoad += product.Weight;
                 return true;
             }
@@ -56,9 +55,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
                 var product = _products.Pop();
                 if (product is null) return null!;
 
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"Из {Name} выгрузили товар {product.Name}");
-                Console.ResetColor();
+                SendMessage($"Из {Name} выгрузили товар {product.Name}");
                 WeightFactLoad -= product.Weight;
                 return product;
             }
@@ -66,24 +63,23 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
 
         public void Drive(IManageable place)
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{Name} поехал в {place.Name} со скоростью {CurrentSpeed} км/ч");
-            Console.ResetColor();
+            SendMessage($"{Name} поехал в {place.Name} со скоростью {CurrentSpeed} км/ч. Процент загрузки - {LoadPercent}%");
             Thread.Sleep(3600000 / CurrentSpeed);
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{Name} приехал в {place.Name}");
-            Console.ResetColor();
+            SendMessage($"{Name} приехал в {place.Name}");
         }
 
         public void DriveHome()
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{Name} поехал в гараж со скоростью {CurrentSpeed} км/ч");
-            Console.ResetColor();
+            SendMessage($"{Name} поехал в гараж со скоростью {CurrentSpeed} км/ч");
             Thread.Sleep(3600000 / CurrentSpeed);
             Owner?.PutInTheGarage(this);
+            SendMessage($"{Name} приехал в гараж");
+        }
+
+        void SendMessage(string message)
+        {
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{Name} приехал в гараж");
+            Console.WriteLine(message);
             Console.ResetColor();
         }
     }

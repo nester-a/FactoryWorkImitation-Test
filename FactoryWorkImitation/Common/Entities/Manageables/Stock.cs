@@ -19,6 +19,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
         {
             Name = name;
             Capacity = capacity;
+            SendMessage($"{Name} создан. Вместимость - {Capacity} товаров");
         }
 
         public bool Load(IProduct product)
@@ -29,16 +30,12 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
                 {
                     if (IsFull)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"Склад заполнен!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        Console.ResetColor();
+                        SendMessage("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Склад заполнен!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     }
                     return false;
                 }
                 _products.Enqueue(product);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"На склад попал товар {product.Name}");
-                Console.ResetColor();
+                SendMessage($"На {Name} попал товар {product.Name}");
                 if (FactLoadPercent >= 95) StockIsAlmostFull?.Invoke(this, EventArgs.Empty);
                 return true;
             }
@@ -51,11 +48,16 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
                 if (IsEmpty) return null!;
                 var product = _products.Dequeue();
                 if (product is null) return null!;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Со склада забрали товар {product.Name}");
-                Console.ResetColor();
+                SendMessage($"Со {Name} забрали товар {product.Name}");
                 return product;
             }
+        }
+
+        void SendMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
     }
 }

@@ -8,6 +8,11 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
         object _lockObj = new();
         List<IProduct> _products = new();
 
+        public Market()
+        {
+            SendMessage($"{Name} создан");
+        }
+
         public string Name => "Рынок";
         public bool IsEmpty => false;
         public bool IsFull => false;
@@ -17,9 +22,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             {
                 if (product is null) return false;
                 _products.Add(product);
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Товар {product.Name} попал на рынок");
-                Console.ResetColor();
+                SendMessage($"Товар {product.Name} попал на рынок");
                 return true;
             }
         }
@@ -27,6 +30,12 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
         {
             //с рынка нельзя выгружать товар
             return null!;
+        }
+        void SendMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
     }
 }

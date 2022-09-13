@@ -20,6 +20,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
             Name = name;
             ManufactureSpeed = manufactureSpeed;
             FactoryProduct = factoryProduct;
+            Console.WriteLine($"{Name} создана. Скорость работы - {manufactureSpeed} товаров в час");
         }
         public bool Load(IProduct product)
         {
