@@ -14,11 +14,15 @@ var logistStrat = new ConcurrencyTruckStrategy();
 //создаем фабрики
 var factoryCreator = new FactoryCreator();
 
-factoryCreator.ManufactureSpeed = 50000;
+factoryCreator.ManufactureSpeed = 5;
 List<IProductFactory> factories = new List<IProductFactory>();
 for (int i = 0; i < 2; i++)
 {
     factories.Add(factoryCreator.CreateFactory());
+}
+foreach (var factory in factories)
+{
+    statList.Add(factory);
 }
 
 //создаем грузовики
@@ -86,7 +90,13 @@ Task.WaitAny();
 Console.ReadKey();
 
 //вывод статистики
+for (int i = 0; i < 2; i++)
+{
+    Console.WriteLine();
+}
+Console.WriteLine("***ВЫВОД СТАТИСТИКИ***");
 foreach (var item in statList)
 {
+    Console.WriteLine();
     item.GetStatistic();
 }

@@ -5,6 +5,7 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
 {
     public class ProductFactory : IProductFactory
     {
+        List<IProduct> _products = new();
         object _lockObj = new();
         public bool IsEmpty => false;
         public bool IsFull => false;
@@ -36,7 +37,29 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
                 Console.WriteLine($"{Name} делает новый {FactoryProduct.Name}...");
                 Thread.Sleep(3600000 / ManufactureSpeed);
                 Console.WriteLine($"{Name} сделала новый товар {FactoryProduct.Name}");
-                return new Product(FactoryProduct.Name, FactoryProduct.Weight, FactoryProduct.PackingType);
+                var product = new Product(FactoryProduct.Name, FactoryProduct.Weight, FactoryProduct.PackingType);
+                _products.Add(product);
+                return product;
+            }
+        }
+
+        public void GetStatistic()
+        {
+            var statisticList = new List<string>();
+            statisticList.Add($"Статистика сущности {Name}");
+            if (!_products.Any()) statisticList.Add(@"/*** пусто ***/");
+            else
+            {
+                var productGroups = _products.GroupBy(p => p.Name);
+                foreach (var product in productGroups)
+                {
+                    var tmp = product.Count();
+                    statisticList.Add($"Выпущено {product.Key} в количестве {tmp} штук");
+                }
+            }
+            foreach (var str in statisticList)
+            {
+                Console.WriteLine(str);
             }
         }
     }
