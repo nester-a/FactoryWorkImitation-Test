@@ -21,11 +21,15 @@ namespace FactoryWorkImitation.Common.Entities.Manageables
         {
             var statisticList = new List<string>();
             statisticList.Add($"Статистика сущности {Name}");
-            var productGroups = _products.GroupBy(p => p.Name);
-            foreach (var product in productGroups)
+            if (!_products.Any()) statisticList.Add(@"/*** пусто ***/");
+            else
             {
-                var tmp = product.Count();
-                statisticList.Add($"{product.Key} в количестве {tmp} штук");
+                var productGroups = _products.GroupBy(p => p.Name);
+                foreach (var product in productGroups)
+                {
+                    var tmp = product.Count();
+                    statisticList.Add($"{product.Key} в количестве {tmp} штук");
+                }
             }
             foreach (var str in statisticList)
             {

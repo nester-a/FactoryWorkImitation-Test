@@ -39,12 +39,13 @@ trucks.Add(truck2);
 //создаем рынок
 var marketCreator = new MarketCreator();
 var market = marketCreator.CreateMarket();
-statList.Add(market as IStatisticsHandler);
+statList.Add(market);
 
 //создаём склад
 var stockCreator = new StockCreator();
 stockCreator.SetCapacity = 200;
 var stock = stockCreator.CreateStock();
+statList.Add(stock);
 
 
 //создаём менеджера склада

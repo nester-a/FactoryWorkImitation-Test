@@ -2,7 +2,7 @@
 
 namespace FactoryWorkImitation.Interfaces.Entities
 {
-    public interface IStock : IManageable
+    public interface IStock : IManageable, IStatisticsHandler
     {
         event EventHandler StockIsAlmostFull;
         int Capacity { get; }
