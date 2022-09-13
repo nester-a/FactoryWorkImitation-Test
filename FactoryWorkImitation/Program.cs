@@ -1,6 +1,7 @@
 ﻿using FactoryWorkImitation.Common.Creators;
-using FactoryWorkImitation.Common.Entities.Managers;
 using FactoryWorkImitation.Common.Entities.Props.Strategies;
+using FactoryWorkImitation.Interfaces.Entities;
+using FactoryWorkImitation.Interfaces.Entities.Manageables;
 
 
 //определяем стратегии (синхронные или конкурентные) 
@@ -10,20 +11,27 @@ var logistStrat = new ConcurrencyTruckStrategy();
 //создаем фабрики
 var factoryCreator = new FactoryCreator();
 
-factoryCreator.ManufactureSpeed = 5000;
-var productFactory = factoryCreator.CreateFactory();
-var productFactory2 = factoryCreator.CreateFactory();
+factoryCreator.ManufactureSpeed = 500;
+List<IProductFactory> factories = new List<IProductFactory>();
+for (int i = 0; i < 2; i++)
+{
+    factories.Add(factoryCreator.CreateFactory());
+}
 
 //создаем грузовики
 var truckCreator = new TruckCreator();
 
-truckCreator.SetSpeed = 12000;
+truckCreator.SetSpeed = 1200;
 truckCreator.SetWeightCapacity = 100;
-var truck = truckCreator.CreateTruck();
+var truck1 = truckCreator.CreateTruck();
 
-truckCreator.SetSpeed = 10000;
+truckCreator.SetSpeed = 1000;
 truckCreator.SetWeightCapacity = 150;
 var truck2 = truckCreator.CreateTruck();
+
+List<ITruck> trucks = new List<ITruck>();
+trucks.Add(truck1);
+trucks.Add(truck2);
 
 //создаем рынок
 var marketCreator = new MarketCreator();
@@ -35,20 +43,34 @@ stockCreator.SetCapacity = 200;
 var stock = stockCreator.CreateStock();
 
 
-
-var manager = new StockManager();
-var logist = new TruckManager();
-logist.PutInTheGarage(truck);
-logist.PutInTheGarage(truck2);
-manager.Factories.Add(productFactory);
-manager.Factories.Add(productFactory2);
+//создаём менеджера склада
+var managerCreator = new StockManagerCreator();
+var manager = managerCreator.CreateStockManager();
+manager.ManageStrategy = managerStrat;
 manager.Stock = stock;
 manager.Market = market;
-manager.LogisticSpecialist = logist;
+foreach (var factory in factories)
+{
+    manager.Factories.Add(factory);
+}
 
-manager.ManageStrategy = managerStrat;
+//создаём менеджера логистической компании
+var logistCreator = new TruckManagerCreator();
+var logist = logistCreator.CreateTruckManager();
 logist.ManageStrategy = logistStrat;
 
+//паркуем грузовики в гараж логистической компании
+foreach (var truck in trucks)
+{
+    logist.PutInTheGarage(truck);
+}
+
+
+//даём менеджеру склада контакты логиста
+manager.LogisticSpecialist = logist;
+
+
+//просим менеджера склада начать работу
 manager.Manage();
 
 Task.Factory.StartNew(() => Console.ReadKey());

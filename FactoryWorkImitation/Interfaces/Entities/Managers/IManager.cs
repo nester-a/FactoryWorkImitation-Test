@@ -4,7 +4,7 @@ namespace FactoryWorkImitation.Interfaces.Entities.Managers
 {
     public interface IManager
     {
-        IManageStrategy ManageStrategy { get; }
+        IManageStrategy ManageStrategy { get; set; }
         void Manage();
     }
 }
